@@ -5,7 +5,10 @@
 # Please take into consideration that you will need to introduce
 # two passwords, the first one is the root password and the second
 # one is the luxoft account pasword.
-
+#
+# Another requirement is to have cpfw-login_amd64.bin file in the
+# same directory with this script
+#
 
 # Install curl
 sudo apt-get install curl
@@ -18,6 +21,7 @@ sudo apt install apt-transport-https ca-certificates curl software-properties-co
 
 # Install Docker
 sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 # Download minikube
 sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
