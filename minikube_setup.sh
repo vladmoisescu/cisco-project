@@ -21,7 +21,7 @@ sudo apt install apt-transport-https ca-certificates curl software-properties-co
 # check if docker exists
 sudo docker --help > /dev/null 2>&1
 
-if [ $? ne 0 ]; then
+if [ $? -ne 0 ]; then
 	echo "installing docker"
 	sudo apt-get install docker-ce docker-ce-cli containerd.io
 	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -45,7 +45,8 @@ else
     		echo -n | openssl s_client -showcerts -connect dl.k8s.io:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > kube.chain.pem
 
     		# Extract the last certificate
-    		csplit -f htf kube.chain.pem '/-----BEGIN CERTIFICATE-----/' '{*}' | sudo cat $(ls htf* | sort | tail -1) > luxoft_root_ca.crt && rm -rf htf*
+    		csplit -f htf kube.chain.pem '/-----BEGIN CERTIFICATE-----/' '{*}'
+	       	sudo cat $(ls htf* | sort | tail -1) > luxoft_root_ca.crt && rm -rf htf*
 
     		# Copy certifiates
     		sudo cp luxoft_root_ca.crt /usr/local/share/ca-certificates/luxoft/luxoft_root_ca.crt
